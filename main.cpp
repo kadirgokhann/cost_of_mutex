@@ -20,6 +20,22 @@ void increment_without_mutex()
               << ", Time taken: " << duration.count() << " seconds\n";
 }
 
+void increment_atomically()
+{
+    std::atomic<int> counter{0};
+    auto start = std::chrono::high_resolution_clock::now();
+
+    for (int i = 0; i < LIMIT; ++i) {
+        ++counter;
+    }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+
+    std::cout << "With atomic    - Final counter: " << counter
+              << ", Time taken: " << duration.count() << " seconds\n";
+}
+
 void increment_with_mutex() {
     int counter = 0;
     std::mutex mtx;
@@ -41,6 +57,7 @@ void increment_with_mutex() {
 int main()
 {
     increment_without_mutex();
+	increment_atomically();
     increment_with_mutex();
     return 0;
 }
