@@ -2,6 +2,7 @@
 #include <mutex>
 #include <chrono>
 #include <thread>
+#include <atomic>
 
 const int LIMIT = 500'000'000;
 
